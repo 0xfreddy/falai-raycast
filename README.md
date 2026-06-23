@@ -20,6 +20,15 @@ Search fal.ai models, filter by model type, and open a schema-derived generation
 
 View local generation history and fal Assets. You can refresh queued requests, preview generated images, open asset links, copy result JSON, copy asset URLs, or download assets to your Downloads folder.
 
+## Screenshots
+
+The Raycast Store metadata includes these screenshots:
+
+1. ![Generated asset details](metadata/01-falai-details.png)
+2. ![Create command home](metadata/02-falai-home.png)
+3. ![Model generation form](metadata/03-falai-model.png)
+4. ![Model type filter](metadata/04-falai-options.png)
+
 ## Notes
 
 - fal.ai usage may require billing or credits depending on the model.
