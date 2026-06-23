@@ -562,7 +562,10 @@ async function downloadAsset(url: string) {
     const downloadsPath = join(homedir(), "Downloads");
     await mkdir(downloadsPath, { recursive: true });
 
-    const filePath = join(downloadsPath, safeFilename(mediaTitle(url)));
+    const filePath = join(
+      downloadsPath,
+      uniqueDownloadFilename(mediaTitle(url)),
+    );
     await writeFile(filePath, bytes);
 
     toast.style = Toast.Style.Success;
@@ -673,6 +676,16 @@ function mediaIcon(url: string) {
   if (type === "audio") return Icon.SpeakerOn;
   if (type === "3d") return Icon.Box;
   return Icon.Document;
+}
+
+function uniqueDownloadFilename(name: string) {
+  const timestamp = new Date().toISOString().replace(/[:.]/g, "-");
+  const safe = safeFilename(name);
+  const dotIndex = safe.lastIndexOf(".");
+  if (dotIndex > 0) {
+    return `${safe.slice(0, dotIndex)}-${timestamp}${safe.slice(dotIndex)}`;
+  }
+  return `${safe}-${timestamp}`;
 }
 
 function safeFilename(name: string) {

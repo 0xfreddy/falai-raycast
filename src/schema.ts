@@ -60,6 +60,16 @@ export function parseFormValues(
     Object.assign(input, parsed);
   }
 
+  const missingRequired = fields.find((field) => {
+    const value = input[field.name];
+    return (
+      field.required && (value === undefined || value === null || value === "")
+    );
+  });
+  if (missingRequired) {
+    throw new Error(`${missingRequired.title} is required.`);
+  }
+
   return input;
 }
 

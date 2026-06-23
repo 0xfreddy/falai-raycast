@@ -4,22 +4,35 @@
   "title": "Fal.ai",
   "description": "Generate and retrieve media from any fal.ai model.",
   "icon": "fal.png",
-  "author": "fede",
+  "author": "0xfreddy",
   "license": "MIT",
+  "platforms": [
+    "macOS"
+  ],
   "categories": [
+    "Design Tools",
     "Developer Tools",
-    "Productivity"
+    "Media"
+  ],
+  "keywords": [
+    "fal",
+    "fal.ai",
+    "image generation",
+    "video generation",
+    "ai media"
   ],
   "commands": [
     {
       "name": "generate",
       "title": "Create",
+      "subtitle": "fal.ai",
       "description": "Search fal.ai models and submit a generation request.",
       "mode": "view"
     },
     {
       "name": "history",
       "title": "Generated Assets",
+      "subtitle": "fal.ai",
       "description": "View and retrieve submitted fal.ai generations.",
       "mode": "view"
     }
@@ -37,7 +50,8 @@
     "build": "ray build -e dist",
     "dev": "ray develop",
     "lint": "ray lint",
-    "fix-lint": "ray lint --fix"
+    "fix-lint": "ray lint --fix",
+    "publish": "npx @raycast/api@latest publish"
   },
   "dependencies": {
     "@raycast/api": "^1.100.3"

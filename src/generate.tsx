@@ -53,6 +53,8 @@ export default function GenerateCommand() {
   const [recentModels, setRecentModels] = useState<string[]>([]);
   const [savedModels, setSavedModels] = useState<FalModel[]>([]);
   const [latestRecords, setLatestRecords] = useState<GenerationRecord[]>([]);
+  const [nextCursor, setNextCursor] = useState<string | null>();
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string>();
 
@@ -92,8 +94,10 @@ export default function GenerateCommand() {
       try {
         const response = await searchModels(searchText);
         setModels(response.models);
+        setNextCursor(response.has_more ? response.next_cursor : null);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
+        setNextCursor(null);
       } finally {
         setIsLoading(false);
       }
@@ -101,6 +105,22 @@ export default function GenerateCommand() {
 
     return () => clearTimeout(timeout);
   }, [preferences.apiKey, searchText]);
+
+  async function loadMoreModels() {
+    if (!nextCursor || isLoadingMore) return;
+
+    setIsLoadingMore(true);
+    try {
+      const response = await searchModels(searchText, nextCursor);
+      setModels((current) => dedupeModels([...current, ...response.models]));
+      setNextCursor(response.has_more ? response.next_cursor : null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : String(err));
+      setNextCursor(null);
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }
 
   if (!preferences.apiKey?.trim()) {
     return (
@@ -152,6 +172,13 @@ export default function GenerateCommand() {
           <List.Dropdown.Item title="3D" value="3d" />
         </List.Dropdown>
       }
+      pagination={{
+        pageSize: 25,
+        hasMore: Boolean(nextCursor),
+        onLoadMore: () => {
+          void loadMoreModels();
+        },
+      }}
       throttle
     >
       {error ? (

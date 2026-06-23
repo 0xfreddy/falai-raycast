@@ -1,14 +1,28 @@
 # fal.ai Raycast Extension
 
-Generate media from fal.ai models directly in Raycast.
+Create and retrieve media from fal.ai models directly in Raycast.
 
-## Flow
+## Setup
 
-1. Add your fal API key in the extension preferences.
-2. Run **Create**.
-3. Search or paste any fal endpoint ID, then open the generation form.
-4. Fill the schema-derived fields. Unsupported or complex fields can be supplied in **Raw JSON overrides**.
-5. Submit the request. The extension stores the request ID and opens the generated result once complete.
-6. Run **Generated Assets** to refresh older queued jobs, copy URLs, open media, or browse your fal Assets library.
+1. Create a fal API key at https://fal.ai/dashboard/keys.
+2. Open Raycast Preferences, select the **fal.ai** extension, and paste the key into **fal API Key**.
+3. Run **Create** to search models and submit generation requests.
 
-The extension uses fal's model search endpoint with `expand=openapi-3.0`, submits through the async queue, and stores request metadata in Raycast local storage so long generations can be retrieved later.
+Raycast stores the API key as a password preference. The extension sends prompts, model parameters, and referenced input URLs to fal.ai when you submit a generation.
+
+## Commands
+
+### Create
+
+Search fal.ai models, filter by model type, and open a schema-derived generation form. The command supports favorites, recently used models, manual endpoint IDs, and raw JSON overrides for advanced model parameters.
+
+### Generated Assets
+
+View local generation history and fal Assets. You can refresh queued requests, preview generated images, open asset links, copy result JSON, copy asset URLs, or download assets to your Downloads folder.
+
+## Notes
+
+- fal.ai usage may require billing or credits depending on the model.
+- Long-running generations are submitted through fal's async queue and saved in Raycast local storage.
+- Some models expose nested or model-specific parameters. Use **Raw JSON Overrides** when a field cannot be represented cleanly in the generated form.
+- If a request is still queued or running, open **Generated Assets** and use **Refresh Status**.
